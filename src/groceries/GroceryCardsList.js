@@ -11,7 +11,7 @@ const GroceryCardsList = () => {
             <Row>
                 {produceArray.map((cardImage) => (
                     <Col md='4' key={cardImage.id}>
-                        <GroceryCard cardImage={cardImage}/>
+                        <GroceryCard cardImage={cardImage} />
                     </Col>
                 ))}
             </Row>

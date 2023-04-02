@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+
+    <!-- Additional CSS must be placed after Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster|Open+Sans" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <title>Grocery Shopping</title>
+</head>
+
+<body>
+    <header class="fixed-top">
+        <div class="jumbotron text-center">
+            <h1>Groceries Budget Calculator</h1>
+            <div class="budgetText text-center mx-auto">Budget: <br />
+                <span class="budgetNumOnPage" id="budgetNumOnPage">$0</span>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light text-light sticky-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse ml-auto" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#budgetNav">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#produceNav">Produce</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#proteinNav">Protein</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#entreesNav">Entrees</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#dessertNav">Dessert</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tableNav">Table Summary</a>
+                    </li>
+                </ul>
+                <span class="navbar-text ml-auto">
+                    <button class="btn bg-primary text-white" id="viewCartButton" data-toggle="modal"
+                        data-target="#cartModal">
+                        View Cart
+                    </button>
+                </span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-center" id="exampleModalLabel">Cart</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="text-center">Produce</h2>
+                    <h4>Fruits</h4>
+                    <ul></ul>
+                    <h4>Vegetables</h4>
+                    <ul></ul>
+                    <h4>Dairy</h4>
+                    <ul></ul>
+                    <br />
+
+                    <h2 class="text-center">Protein</h2>
+                    <h4>Lean Meat</h4>
+                    <ul></ul>
+                    <h4>Red Meat</h4>
+                    <ul></ul>
+                    <h4>Vegetarian Protein</h4>
+                    <ul></ul>
+                    <br />
+
+                    <h2 class="text-center">Entrees</h2>
+                    <h4>Original Pasta</h4>
+                    <ul></ul>
+                    <h4>Original Salad</h4>
+                    <ul></ul>
+                    <h4>Original Chicken and Rice</h4>
+                    <ul></ul>
+                    <br />
+
+                    <h2 class="text-center">Dessert</h2>
+                    <h4>Sweets</h4>
+                    <ul></ul>
+                    <h4>Drinks</h4>
+                    <ul></ul>
+                    <h4>Snacks</h4>
+                    <ul></ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container-lg">
+        <div class="row" id="budgetNav">
+            <div class="col text-center">
+                <label for="budgetInput"> What is your budget? </label> <br />
+                <input type="text" id="budgetInput" name="budget" class="align-middle" required />
+                <button type="button" class="btn bg-primary text-white" id="confirmBudgetBtn">Confirm</button>
+                <span class="bg-danger text-white" id="warningBudget"> <br /> Come on, enter a real number!</span>
+                <span class="bg-danger text-white" id="enterNumMin"> <br /> You must enter a budget of at least $1.
+                </span>
+                <span class="bg-danger text-white" id="maxBudget"> <br/> The maximum budget is $9,999.99. If you're budget is $10K or greater, then with all due respect you don't even need this app! 
+                </span>
+            </div>
+        </div>
+
+
+
+
+
+        <br /> <br />
+
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center">Browse Below:</h2>
+                <h5 class="text-center">Check some of the following dishes you like.
+                    If you want more options, enter more down below!
+                </h5>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center">
+                <h1 id="produceNav">Produce</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/fruits.jpg" alt="Fruits">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Fruits </h3>
+                        <ul>
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Blueberries ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Bananas ($1)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Blackberries ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/vegetables.jpg" alt="Vegetables">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Vegetables </h3>
+                        <ul>
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Salad Mix ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Brussels Sprouts ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Broccoli ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/dairy.jpg" alt="Dairy">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Dairy </h3>
+                        <ul>
+                            <li value="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Milk ($4)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="100">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Eggs ($100)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Cheese ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br /> <br />
+
+        <div class="row">
+            <div class="col text-center">
+                <h1 id="proteinNav">Protein</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/salmon.jpg" alt="Fruits">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Lean Meat</h3>
+                        <ul>
+                            <li value="10">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Chicken Breast ($10)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Ground Turkey ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="15">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Salmon ($15)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/steak.jpg" alt="Vegetables">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Red Meat </h3>
+                        <ul>
+                            <li value="20">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Steak ($20)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Bacon ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Ground Beef ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/tofu.jpg" alt="Dairy">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Vegetarian Protein</h3>
+                        <ul>
+                            <li value="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Beans ($4)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Tofu ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Impossible Beef ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br /> <br />
+
+
+
+        <div class="row">
+            <div class="col text-center">
+                <h1 id="entreesNav">Entrees</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/originalPasta.JPG" alt="Original Pasta">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Original Pasta </h3>
+                        <h5 class="text-center" id="cardOriginalPastaPrice"></h5>
+                        <h6 class="card-text">The ingredients for this include:</h6>
+                        <ul class>
+                            <li value="3">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Pasta Noodles ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Pasta Sauce ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+
+                            <li value="10">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Some Ingredient ($10)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p>Number of servings: <span>4</span></p>
+
+                        <label>Quantity: </label>
+                        <select name="quantity">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn bg-primary text-white addToCart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/originalSalad.JPG" alt="Original Salad">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Original Salad </h3>
+                        <h5 class="text-center" id="cardOriginalSaladPrice"></h5>
+                        <h6 class="card-text">The ingredients for this include:</h6>
+                        <ul>
+                            <li value="3">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Salad Mix ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Dressing ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p>Number of servings: <span>4</span></p>
+
+                        <label>Quantity: </label>
+                        <select name="dishes">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn bg-primary text-white addToCart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/originalChickenAndRice.JPG" alt="Original Chicken and Rice">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Original Chicken and Rice </h3>
+                        <h5 class="text-center" id="cardOriginalChickenRicePrice"></h5>
+                        <h6 class="card-text">The ingredients for this include:</h6>
+                        <ul>
+                            <li value="7">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Chicken ($7)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="w-100 d-flex justify-content-between">
+                                    <p>Rice (3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-transparent text-white removeIngredientItem">x</button>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p>Number of servings: <span>4</span></p>
+
+                        <label>Quantity: </label>
+                        <select name="dishes">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <button type="button" class="btn bg-primary text-white">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col text-center">
+                <h1 id="dessertNav">Dessert</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/cookies.jpg" alt="Fruits">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Sweets </h3>
+                        <ul>
+                            <li value="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Ice Cream ($4)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Cookies ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="5">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Lemon Bars ($5)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/drinks.jpg" alt="Vegetables">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Drinks </h3>
+                        <ul>
+                            <li value="3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Coca Cola Cans ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Pliny the Elder ($12)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="15">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Cabernet Sauvignon Wine ($15)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img class="card-img-top" src="images/snacks.jpg" alt="Dairy">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Snacks </h3>
+                        <ul>
+                            <li value="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Cheetos ($4)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Tortilla Chips ($4)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+
+                            <li value="3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p>Ritz Cracker ($3)</p>
+                                    <button type="button"
+                                        class="btn btn-sm bg-primary text-white addToCartSmall align-self-start">Add</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div id="tableNav" class="row">
+            <div class="col">
+                <table class="table" id="tableOfCart">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Dish / Type</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Ingredients Needed</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-white">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+</body>
+
+<!-- jQuery must come first, then Popper.js, then the Bootstrap JavaScript plugins.-->
+<script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script src="js/script.js"> </script>
+
+</script>
+
+</html>

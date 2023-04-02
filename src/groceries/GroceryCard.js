@@ -1,28 +1,37 @@
 import React from 'react';
-import { Card, CardTitle, CardBody, CardImg, CardText, Container, Row, Col } from 'reactstrap';
+import { Card, CardTitle, CardBody, CardImg, CardText, Button } from 'reactstrap';
 
 
-const GroceryCard = ({cardImage}) => {
-    const {id, image, name, items} = cardImage;
+const GroceryCard = ({ cardImage}) => {
+    const { image, name, items } = cardImage;
+    const updateBudget = (price) => {
+    }
 
     return (
         <Card>
-            <CardImg src={image} alt='idk yet'/>
+            <CardImg src={image} alt='idk yet' />
             <CardBody>
                 <CardTitle>
                     <h3>{name}</h3>
                 </CardTitle>
                 <CardText>
-                    {/* {console.log('the items list type is: ' + typeof(items))} */}
                     <ul>
-                        {items.map((item) => (
-                            <li className='text-left'>{`${item.name} ($${item.price})`}</li>
+                        {items.map((item, ind) => (
+                            <li key={ind}>
+                                <div className='d-flex justify-content-between'>
+                                    <span>{`${item.name} ($${item.price})`} </span>
+                                    <Button 
+                                    className='align-self-start'
+                                    onClick={updateBudget(item.price)}
+
+                                    >Add</Button>
+                                </div>
+                            </li>
                         ))}
                     </ul>
                 </CardText>
             </CardBody>
         </Card>
-
     )
 }
 

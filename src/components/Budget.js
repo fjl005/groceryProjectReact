@@ -1,6 +1,6 @@
-const Budget = () => {
+const Budget = ({budgetValue}) => {
   return (
-    <div>budget</div>
+    <h1>{budgetValue}</h1>
   )
 }
 

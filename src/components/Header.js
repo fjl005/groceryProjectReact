@@ -17,7 +17,6 @@ const Header = () => {
 
   return (
     <>
-      <Budget />
       navbar
     </>
     

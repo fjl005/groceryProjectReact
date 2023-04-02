@@ -1,4 +1,4 @@
-import { FormGroup, Col } from 'reactstrap';
+import { FormGroup, Col, Label } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import {useState} from 'react';
 import { validateBudgetInput } from '../utils/validateBudgetInput';
@@ -18,6 +18,9 @@ const BudgetInput = ({setBudgetValue, budgetValue}) => {
             <Form>
                 <FormGroup row>
                     <Col>
+                        {/* <Label name='budgetInput'>
+                            Enter Budget: 
+                        </Label> */}
                         <Field
                             name='budgetInput'
                             placeholder='Enter Budget (min. $1)'

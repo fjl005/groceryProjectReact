@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Card, CardTitle, CardBody, CardImg, CardText, Button } from 'reactstrap';
 
 const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
@@ -9,6 +9,18 @@ const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
         }
     }
 
+    const [buttonColor, setButtonColor] = useState('primary');
+    const [buttonText, setButtonText] = useState('Add');
+
+    const updateButtonColor = (clicked) => {
+        if (clicked) {
+            setButtonColor('success');
+            setButtonText('Added!');
+            setTimeout(setButtonColor, 2000, 'primary');
+            setTimeout(setButtonText, 2000, 'Add')
+        } 
+    }
+    
     return (
         <Card>
             <CardImg src={image} alt='idk yet' />
@@ -24,10 +36,12 @@ const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
                                     <span>{`${item.name} ($${item.price})`} </span>
                                     <Button 
                                     className='align-self-start'
-                                    // onClick={() => {setBudgetValue(budgetValue-item.price)}}
-                                    onClick={() => updateBudget(item.price)}
-
-                                    >Add</Button>
+                                    color={buttonColor}
+                                    onClick={() => {
+                                        updateBudget(item.price);
+                                        updateButtonColor(true);
+                                        }}
+                                    >{buttonText}</Button>
                                 </div>
                             </li>
                         ))}

@@ -4,14 +4,14 @@ import GroceryCard from './GroceryCard';
 import { produceArray } from './groceriesSlice';
 import { proteinArray } from './groceriesSlice';
 
-const GroceryCardsList = () => {
+const GroceryCardsList = ({setBudgetValue, budgetValue}) => {
     return (
         <Container>
             <h2>Produce</h2>
             <Row>
                 {produceArray.map((cardImage) => (
                     <Col md='4' key={cardImage.id}>
-                        <GroceryCard cardImage={cardImage} />
+                        <GroceryCard cardImage={cardImage} setBudgetValue={setBudgetValue} budgetValue={budgetValue} />
                     </Col>
                 ))}
             </Row>

@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <Header/>
       <BudgetInput setBudgetValue={setBudgetValue} budgetValue={budgetValue}/>
-      <GroceryCardsList />
+      <GroceryCardsList setBudgetValue={setBudgetValue} budgetValue={budgetValue}/>
     </div>
   );
 }

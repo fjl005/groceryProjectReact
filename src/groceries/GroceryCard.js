@@ -1,10 +1,12 @@
 import React from 'react';
 import { Card, CardTitle, CardBody, CardImg, CardText, Button } from 'reactstrap';
 
-
-const GroceryCard = ({ cardImage}) => {
+const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
     const { image, name, items } = cardImage;
     const updateBudget = (price) => {
+        if (budgetValue >= price) {
+            setBudgetValue(budgetValue-price);
+        }
     }
 
     return (
@@ -22,7 +24,8 @@ const GroceryCard = ({ cardImage}) => {
                                     <span>{`${item.name} ($${item.price})`} </span>
                                     <Button 
                                     className='align-self-start'
-                                    onClick={updateBudget(item.price)}
+                                    // onClick={() => {setBudgetValue(budgetValue-item.price)}}
+                                    onClick={() => updateBudget(item.price)}
 
                                     >Add</Button>
                                 </div>

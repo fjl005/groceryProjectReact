@@ -1,18 +1,24 @@
 import { FormGroup, Col, Label } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import {useState} from 'react';
 import { validateBudgetInput } from '../utils/validateBudgetInput';
+import { currentBudget } from '../groceries/groceriesSlice';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setBudget } from '../groceries/groceriesSlice';
 
-const BudgetInput = ({setBudgetValue, budgetValue}) => {
+const BudgetInput = () => {
+    const currentBudgetVal = useSelector(currentBudget);
+    const dispatch = useDispatch();
+
     const handleChange = (e) => {
-        setBudgetValue(e.target.value);
+        dispatch(setBudget(e.target.value));
         validateBudgetInput(e.target.value);
     }
 
     return (
         <Formik
         initialValues={{
-            budgetInput: budgetValue
+            budgetInput: currentBudgetVal
         }}
         validate={validateBudgetInput}>
             <Form>
@@ -30,7 +36,7 @@ const BudgetInput = ({setBudgetValue, budgetValue}) => {
                         <ErrorMessage name='budgetInput'>
                             {(msg) => <p className='text-danger'>{msg}</p>}
                         </ErrorMessage>
-                        <h1>Budget: ${budgetValue}</h1>
+                        <h1>Budget: ${currentBudgetVal}</h1>
 
                     </Col>
 

@@ -1,28 +1,33 @@
 import { Button } from 'reactstrap';
 import { useState } from 'react';
+import { updateBudget } from './groceriesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { currentBudget } from './groceriesSlice';
 
-const AddButton = ({ price, setBudgetValue, budgetValue }) => {
+const AddButton = ({ price }) => {
+    const [buttonColor, setButtonColor] = useState('primary');
+    const [buttonText, setButtonText] = useState('Add');
 
-    const updateBudget = (price) => {
-        if (budgetValue >= price) {
-            setBudgetValue(budgetValue - price);
+    const dispatch = useDispatch();
+    const currentBudgetVal = useSelector(currentBudget);
+
+    const changeBudget = (price) => {
+        if (currentBudgetVal >= price) {
+            dispatch(updateBudget(price));
         } else {
             setButtonText('No $$');
             setButtonColor('danger');
             resetButton();
+
         }
     }
-
-    const [buttonColor, setButtonColor] = useState('primary');
-    const [buttonText, setButtonText] = useState('Add');
 
     const updateButton = (clicked, price) => {
         if (clicked) {
             setButtonColor('success');
             setButtonText('Added!');
             resetButton();
-            console.log('hello');
-            updateBudget(price);
+            changeBudget(price);
         }
     }
 

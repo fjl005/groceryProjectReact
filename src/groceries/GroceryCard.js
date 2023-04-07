@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Card, CardTitle, CardBody, CardImg, CardText, Button } from 'reactstrap';
 import AddButton from './AddButton';
 
-const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
+const GroceryCard = ({ cardImage}) => {
     const { image, name, items } = cardImage;
     
     return (
@@ -20,8 +20,6 @@ const GroceryCard = ({ cardImage, setBudgetValue, budgetValue}) => {
                                     <span>{`${item.name} ($${item.price})`} </span>
                                     <AddButton 
                                         price={item.price}
-                                        setBudgetValue={setBudgetValue}
-                                        budgetValue={budgetValue}
                                     />
                                 </div>
                             </li>

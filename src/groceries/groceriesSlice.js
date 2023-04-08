@@ -32,5 +32,6 @@ export const currentBudget = (state) => {
     return state.groceries.budget;
 }
 
+// Double check if I even use these two variables? I forget...
 export const produceArray = PRODUCE;
 export const proteinArray = PROTEIN;

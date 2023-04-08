@@ -4,6 +4,7 @@ import './App.css';
 import Header from './components/Header';
 import GroceryCardsList from './groceries/GroceryCardsList';
 import BudgetInput from './components/BudgetInput';
+import Summary from './summary/Summary';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header/>
       <BudgetInput />
       <GroceryCardsList />
+      <Summary />
     </div>
   );
 }

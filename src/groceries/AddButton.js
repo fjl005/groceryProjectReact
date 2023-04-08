@@ -3,31 +3,37 @@ import { useState } from 'react';
 import { updateBudget } from './groceriesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { currentBudget } from './groceriesSlice';
+import { addItem } from '../summary/summarySlice';
 
-const AddButton = ({ price }) => {
+const AddButton = ({ price, itemName }) => {
+    // Button styling
     const [buttonColor, setButtonColor] = useState('primary');
     const [buttonText, setButtonText] = useState('Add');
-
+    
+    // Redux Code
     const dispatch = useDispatch();
     const currentBudgetVal = useSelector(currentBudget);
 
-    const changeBudget = (price) => {
+    const changeBudget = (price, itemName) => {
         if (currentBudgetVal >= price) {
             dispatch(updateBudget(price));
+            dispatch(addItem({
+                    price: price,
+                    itemName: itemName
+            }));
         } else {
             setButtonText('No $$');
             setButtonColor('danger');
             resetButton();
-
         }
     }
 
-    const updateButton = (clicked, price) => {
+    const updateButton = (clicked, price, itemName) => {
         if (clicked) {
             setButtonColor('success');
             setButtonText('Added!');
             resetButton();
-            changeBudget(price);
+            changeBudget(price, itemName);
         }
     }
 
@@ -41,7 +47,7 @@ const AddButton = ({ price }) => {
         <Button
             color={buttonColor}
             onClick={() => {
-                updateButton(true, price);
+                updateButton(true, price, itemName);
             }}>
             {buttonText}
         </Button>

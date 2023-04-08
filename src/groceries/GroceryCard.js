@@ -20,6 +20,7 @@ const GroceryCard = ({ cardImage}) => {
                                     <span>{`${item.name} ($${item.price})`} </span>
                                     <AddButton 
                                         price={item.price}
+                                        itemName = {item.name}
                                     />
                                 </div>
                             </li>

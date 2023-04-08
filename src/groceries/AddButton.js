@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { currentBudget } from './groceriesSlice';
 import { addItem } from '../summary/summarySlice';
 
-const AddButton = ({ price, itemName }) => {
+const AddButton = ({ price, itemName, groceryType }) => {
     // Button styling
     const [buttonColor, setButtonColor] = useState('primary');
     const [buttonText, setButtonText] = useState('Add');
@@ -18,8 +18,9 @@ const AddButton = ({ price, itemName }) => {
         if (currentBudgetVal >= price) {
             dispatch(updateBudget(price));
             dispatch(addItem({
-                    price: price,
-                    itemName: itemName
+                price: price,
+                itemName: itemName,
+                groceryType: groceryType
             }));
         } else {
             setButtonText('No $$');

@@ -1,10 +1,14 @@
-import { currentList } from "./summarySlice";
-import { useDispatch, useSelector } from "react-redux";
+import { currentList, currentFruitList, currentVegetableList, currentDairyList} from "./summarySlice";
+import { useSelector } from "react-redux";
+import AddedGrocery from "./AddedGrocery";
+
 
 
 function Summary() {
     const currentListVal = useSelector(currentList);
-    const dispatch = useDispatch();
+    const currentFruitListVal = useSelector(currentFruitList);
+    const currentVegetableListVal = useSelector(currentVegetableList);
+    const currentDairyListVal = useSelector(currentDairyList);
 
     return (
         <>
@@ -13,10 +17,22 @@ function Summary() {
             <ul>
                 <li>Fruits</li>
                 <ul>
-                    <li>{currentListVal}</li>
+                    {currentFruitListVal.map((item) => (
+                        <AddedGrocery item={item}/>
+                    ))}
                 </ul>
                 <li>Vegetables</li>
+                <ul>
+                    {currentVegetableListVal.map((item) => (
+                        <AddedGrocery item={item}/>
+                    ))}
+                </ul>
                 <li>Dairy</li>
+                <ul>
+                    {currentDairyListVal.map((item) => (
+                        <AddedGrocery item={item}/>
+                    ))}
+                </ul>
             </ul>
 
         </>

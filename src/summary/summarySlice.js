@@ -12,39 +12,52 @@ const summarySlice = createSlice({
     initialState,
     reducers: {
         addItem: (state, action) => {
-            const {price, itemName, groceryType} = action.payload;
+            const { price, itemName, groceryType } = action.payload;
+            let exist = false;
 
             switch (groceryType) {
                 case ('Fruits'): {
-                    state.fruitItems.push({
-                    groceryName: itemName,
-                    price: price,
-                    quantity: 1
+                    
+                    state.fruitItems.forEach((grocery) => {
+                        if (grocery.groceryName === itemName) {
+                            grocery.quantity++;
+                            exist = true;
+                            return;
+                        }
                     });
+
+                    if (!exist) {
+                        console.log('it does not exist yet');
+                        state.fruitItems.push({
+                            groceryName: itemName,
+                            price: price,
+                            quantity: 1
+                        });
+                    }
                     return state;
                 }
 
                 case ('Vegetables'): {
                     state.vegetableItems.push({
-                    groceryName: itemName,
-                    price: price,
-                    quantity: 1
+                        groceryName: itemName,
+                        price: price,
+                        quantity: 1
                     });
                     return state;
                 }
 
                 case ('Dairy'): {
                     state.dairyItems.push({
-                    groceryName: itemName,
-                    price: price,
-                    quantity: 1
+                        groceryName: itemName,
+                        price: price,
+                        quantity: 1
                     });
                     return state;
                 }
                 default:
                     return state;
             }
-            
+
         }
     }
 });
@@ -81,7 +94,7 @@ export const currentDairyList = (state) => {
 
 //     // const groceryName = grocery.groceryName;
 //     // console.log(groceryName);
-    
+
 //     // const blueberries = 'blueberries';
 //     // const groceryName = groceryArray.find((item) => item === blueberries).groceryName;
 //     // console.log('grocery name', groceryName);
@@ -89,4 +102,4 @@ export const currentDairyList = (state) => {
 //     // return state.summary.items.grocery.name;
 // }
 
-export const {addItem} = summarySlice.actions;
+export const { addItem } = summarySlice.actions;

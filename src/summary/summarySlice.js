@@ -27,7 +27,6 @@ const summarySlice = createSlice({
                     });
 
                     if (!exist) {
-                        console.log('it does not exist yet');
                         state.fruitItems.push({
                             groceryName: itemName,
                             price: price,

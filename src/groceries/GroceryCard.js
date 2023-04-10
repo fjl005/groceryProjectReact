@@ -12,6 +12,7 @@ const GroceryCard = ({ cardImage }) => {
     const [updateGroceryModal, setUpdateGroceryModal] = useState(false);
     const [modifyGroceryModal, setModifyGroceryModal] = useState(false);
 
+
     const addNewGrocery = (values) => {
 
     }
@@ -38,6 +39,7 @@ const GroceryCard = ({ cardImage }) => {
                                             price={item.price}
                                             itemName={item.name}
                                             groceryType={name}
+
                                         />
                                     </div>
                                 </li>
@@ -67,7 +69,8 @@ const GroceryCard = ({ cardImage }) => {
                     <Formik initialValues={
                         {
                             newGroceryName: '',
-                            newGroceryPrice: ''
+                            newGroceryPrice: '',
+                            category: ''
                         }}
                         onSubmit={addNewGrocery}
                     // validate={}

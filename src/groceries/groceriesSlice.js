@@ -3,7 +3,9 @@ import { PROTEIN } from './data/PROTEIN';
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-    budget: 0
+    budget: 0,
+    produce: PRODUCE,
+    protein: PROTEIN
 };
 
 const groceriesSlice = createSlice({
@@ -20,6 +22,10 @@ const groceriesSlice = createSlice({
 
         setBudget: (state, action) => {
             state.budget = action.payload;
+        },
+
+        addGrocery: (state, action) => {
+            
         }
     }
 });
@@ -33,5 +39,10 @@ export const currentBudget = (state) => {
 }
 
 // Double check if I even use these two variables? I forget...
-export const produceArray = PRODUCE;
-export const proteinArray = PROTEIN;
+export const produceArray = (state) => {
+    return state.groceries.produce;
+};
+
+export const proteinArray = (state) => {
+    return state.groceries.protein;
+};

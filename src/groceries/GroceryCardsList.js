@@ -14,7 +14,7 @@ const GroceryCardsList = () => {
             <Row>
                 {produce.map((cardImage) => (
                     <Col md='4' key={cardImage.id}>
-                        <GroceryCard cardImage={cardImage}/>
+                        <GroceryCard cardImage={cardImage} category='Produce'/>
                     </Col>
                 ))}
             </Row>
@@ -24,7 +24,7 @@ const GroceryCardsList = () => {
             <Row>
                 {protein.map((cardImage) => (
                     <Col md='4' key={cardImage.id}>
-                        <GroceryCard cardImage={cardImage}/>
+                        <GroceryCard cardImage={cardImage} category='Protein'/>
                     </Col>
                 ))}
             </Row>

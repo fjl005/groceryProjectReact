@@ -37,11 +37,21 @@ const summarySlice = createSlice({
                 }
 
                 case ('Vegetables'): {
-                    state.vegetableItems.push({
-                        groceryName: itemName,
-                        price: price,
-                        quantity: 1
+                    state.vegetableItems.forEach((grocery) => {
+                        if (grocery.groceryName === itemName) {
+                            grocery.quantity++;
+                            exist = true;
+                            return;
+                        }
                     });
+
+                    if (!exist) {
+                        state.vegetableItems.push({
+                            groceryName: itemName,
+                            price: price,
+                            quantity: 1
+                        });
+                    }
                     return state;
                 }
 

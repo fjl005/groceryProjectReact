@@ -3,17 +3,30 @@ import {
     Card, CardTitle, CardBody, CardImg, CardText, Button,
     Modal, ModalHeader, ModalBody, FormGroup, Label
 } from 'reactstrap';
-import { Formik, Field, Form, ERrorMessage } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import AddButton from './AddButton';
+import { addGrocery } from './groceriesSlice';
+import { useDispatch } from 'react-redux';
 
-const GroceryCard = ({ cardImage }) => {
+const GroceryCard = ({ cardImage, category }) => {
     const { image, name, items } = cardImage;
     const [newGroceryModal, setNewGroceryModal] = useState(false);
     const [updateGroceryModal, setUpdateGroceryModal] = useState(false);
     const [modifyGroceryModal, setModifyGroceryModal] = useState(false);
+    const dispatch = useDispatch();
 
 
     const addNewGrocery = (values) => {
+        const newGrocery = {
+            name: values.newGroceryName,
+            price: values.newGroceryPrice,
+            // I should change the variable from the PRODUCE file, from name to groceryType.
+            groceryType: name,
+            category: category
+        }
+
+        dispatch(addGrocery(newGrocery));
+        setNewGroceryModal(false);
 
     }
 
@@ -39,7 +52,6 @@ const GroceryCard = ({ cardImage }) => {
                                             price={item.price}
                                             itemName={item.name}
                                             groceryType={name}
-
                                         />
                                     </div>
                                 </li>
@@ -70,7 +82,6 @@ const GroceryCard = ({ cardImage }) => {
                         {
                             newGroceryName: '',
                             newGroceryPrice: '',
-                            category: ''
                         }}
                         onSubmit={addNewGrocery}
                     // validate={}

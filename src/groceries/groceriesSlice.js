@@ -25,6 +25,32 @@ const groceriesSlice = createSlice({
         },
 
         addGrocery: (state, action) => {
+            const {name, price, groceryType, category} = action.payload;
+            const newGrocery = {
+                name: name,
+                price: price
+            }
+            
+            switch (category) {
+                case 'Produce': {
+                    state.produce.map((item) => {
+                        if (item.name === groceryType) {
+                            item.items.push(newGrocery);
+                        }
+        
+                    });
+                    return state;
+                }
+                case 'Protein': {
+                    state.protein.map((item) => {
+                        if (item.name === groceryType) {
+                            item.items.push(newGrocery);
+                        }
+        
+                    });
+                    return state;
+                }
+            }
             
         }
     }
@@ -32,7 +58,7 @@ const groceriesSlice = createSlice({
 
 export const groceriesReducer = groceriesSlice.reducer;
 
-export const {updateBudget, setBudget} = groceriesSlice.actions;
+export const {updateBudget, setBudget, addGrocery} = groceriesSlice.actions;
 
 export const currentBudget = (state) => {
     return state.groceries.budget;

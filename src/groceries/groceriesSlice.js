@@ -13,10 +13,6 @@ const groceriesSlice = createSlice({
     initialState,
     reducers: {
         updateBudget: (state, action) => {
-            // ...state,
-            // action.budget: state[budget] + action.budget,
-
-            // The code below is using Immer, which is directly mutating the state. However, I want to eventually write it the correct way with the spread operator; I just haven't figured that out yet.
             state.budget = state.budget - action.payload;
         },
 
@@ -26,49 +22,67 @@ const groceriesSlice = createSlice({
 
         addGrocery: (state, action) => {
             const {name, price, groceryType, category} = action.payload;
+            const lowerCaseCategory = category.toLowerCase();
             const newGrocery = {
                 name: name,
                 price: price
             }
-            
-            switch (category) {
-                case 'Produce': {
-                    state.produce.map((item) => {
-                        if (item.name === groceryType) {
-                            item.items.push(newGrocery);
-                        }
-        
-                    });
-                    return state;
+
+            state[lowerCaseCategory].map((item) => {
+                if (item.name === groceryType) {
+                    item.items.push(newGrocery);
                 }
-                case 'Protein': {
-                    state.protein.map((item) => {
-                        if (item.name === groceryType) {
-                            item.items.push(newGrocery);
-                        }
-        
-                    });
-                    return state;
-                }
-            }
+
+            });
+            return state;
             
+        },
+
+        // Need to work on this next
+        updateGrocery: (state, action) => {
+            // const {name, price, groceryType, category} = action.payload;
+            // const lowerCaseCategory = category.toLowerCase();
+
+            // console.log('i assume this works');
+            // const groceryTypeObject = state[lowerCaseCategory].find((type) => (type.name === groceryType));
+            // console.log('groceryTypeObject: ', groceryTypeObject);
+            // groceryTypeObject.items.map((item) => {
+            //     if (item.name === name) {
+            //         console.log('this works');
+            //         item.price = price;
+            //     }
+            // });
+
+            return state;
         }
     }
 });
 
 export const groceriesReducer = groceriesSlice.reducer;
 
-export const {updateBudget, setBudget, addGrocery} = groceriesSlice.actions;
+export const {updateBudget, setBudget, addGrocery, updateGrocery} = groceriesSlice.actions;
 
 export const currentBudget = (state) => {
     return state.groceries.budget;
 }
 
-// Double check if I even use these two variables? I forget...
-export const produceArray = (state) => {
-    return state.groceries.produce;
-};
+export const findCategory = (category) => (state) => {
 
-export const proteinArray = (state) => {
-    return state.groceries.protein;
-};
+    const lowerCaseCategory = category.toLowerCase();
+    return state.groceries[lowerCaseCategory];
+
+}
+
+export const findGroceryType = (category, groceryType) => (state) => {
+    let returnGroceryType;
+    category.map((findType) => {
+        if (findType.name === groceryType) {
+            returnGroceryType = findType;
+        }
+    })
+
+    return returnGroceryType
+}
+
+//     return state.groceries.protein;
+// };

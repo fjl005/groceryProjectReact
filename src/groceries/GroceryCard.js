@@ -5,14 +5,17 @@ import {
 } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import AddButton from './AddButton';
-import { addGrocery } from './groceriesSlice';
-import { useDispatch } from 'react-redux';
+import { addGrocery, findCategory, findGroceryType, updateGrocery } from './groceriesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const GroceryCard = ({ cardImage, category }) => {
     const { image, name, items } = cardImage;
     const [newGroceryModal, setNewGroceryModal] = useState(false);
     const [updateGroceryModal, setUpdateGroceryModal] = useState(false);
     const [modifyGroceryModal, setModifyGroceryModal] = useState(false);
+
+    const categoryObject = useSelector(findCategory(category));
+    const groceryTypeObject = useSelector(findGroceryType(categoryObject, name));
     const dispatch = useDispatch();
 
 
@@ -31,7 +34,15 @@ const GroceryCard = ({ cardImage, category }) => {
     }
 
     const updateGrocery = (values) => {
+        const updatedGrocery = {
+            name: values.updatedGroceryName,
+            price: values.updatedGroceryPrice,
+            groceryType: name,
+            category: category
+        }
 
+        // dispatch(updateGrocery(updatedGrocery));
+        // setUpdateGroceryModal(false);
     }
 
     return (
@@ -63,12 +74,10 @@ const GroceryCard = ({ cardImage, category }) => {
                                 style={{ color: 'white', border: '1px solid white' }}
                             >
                                 New </Button>
-                            <Button>Update</Button>
+                            <Button onClick={() => setUpdateGroceryModal(true)}
+                                style={{ color: 'white', border: '1px solid white' }}>Update</Button>
                             <Button>Delete</Button>
                         </div>
-
-
-
                     </CardText>
                 </CardBody>
             </Card>
@@ -122,7 +131,7 @@ const GroceryCard = ({ cardImage, category }) => {
                 <ModalBody>
                     <Formik initialValues={
                         {
-                            selectedGroceryName: '',
+                            updatedGroceryName: '',
                             updatedGroceryPrice: ''
                         }}
                         onSubmit={updateGrocery}
@@ -130,27 +139,36 @@ const GroceryCard = ({ cardImage, category }) => {
                     >
                         <Form>
                             <FormGroup>
-                                <Label htmlFor='newGroceryName'>
-                                    New Grocery Name
+                                <Label htmlFor='updatedGroceryName'>
+                                    Select Current Grocery
                                 </Label>
-                                <Field id='newGroceryName' name='newGroceryName' placeholder='Grocery' className='form-control' />
+
+                                <Field name='updatedGroceryName'
+                                    as='select'
+                                    className='form-control'>
+
+                                    {groceryTypeObject.items.map((grocery) => {
+                                        return <option>{grocery.name}</option>
+                                    })}
+
+                                </Field>
                                 {/* <ErrorMessage name='newGroceryName'>
                                             {(msg) => <p className='text-danger'>{msg}</p>}
                                         </ErrorMessage> */}
                             </FormGroup>
 
                             <FormGroup>
-                                <Label htmlFor='newGroceryPrice'>
-                                    Price
+                                <Label htmlFor='updatedGroceryPrice'>
+                                    Updated Price
                                 </Label>
-                                <Field id='newGroceryPrice' name='newGroceryPrice' placeholder='$$' className='form-control' />
+                                <Field id='updatedGroceryPrice' name='updatedGroceryPrice' placeholder='$$' className='form-control' />
                                 {/* <ErrorMessage name='newGroceryName'>
                                             {(msg) => <p className='text-danger'>{msg}</p>}
                                         </ErrorMessage> */}
                             </FormGroup>
 
                             <Button type='submit' color='primary'>
-                                Add
+                                Update
                             </Button>
                         </Form>
                     </Formik>

@@ -2,11 +2,11 @@ import { Card, CardTitle, CardBody, CardText, Container, Row, Col } from 'reacts
 import React from 'react';
 import GroceryCard from './GroceryCard';
 import { useSelector } from 'react-redux';
-import { produceArray, proteinArray } from './groceriesSlice';
+import { findCategory } from './groceriesSlice';
 
 const GroceryCardsList = () => {
-    const produce = useSelector(produceArray);
-    const protein = useSelector(proteinArray);
+    const produce = useSelector(findCategory('Produce'));
+    const protein = useSelector(findCategory('Protein'));
 
     return (
         <Container>

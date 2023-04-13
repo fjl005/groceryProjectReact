@@ -5,17 +5,19 @@ import {
 } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import AddButton from './AddButton';
-import { addGrocery, findCategory, findGroceryType, updateGrocery } from './groceriesSlice';
+import { addGroceryReducer, findCategory, findGroceryType, updateGroceryReducer, deleteGroceryReducer } from './groceriesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const GroceryCard = ({ cardImage, category }) => {
-    const { image, name, items } = cardImage;
+    const { image, groceryType, items } = cardImage;
+
     const [newGroceryModal, setNewGroceryModal] = useState(false);
     const [updateGroceryModal, setUpdateGroceryModal] = useState(false);
-    const [modifyGroceryModal, setModifyGroceryModal] = useState(false);
+    const [deleteGroceryModal, setDeleteGroceryModal] = useState(false);
 
     const categoryObject = useSelector(findCategory(category));
-    const groceryTypeObject = useSelector(findGroceryType(categoryObject, name));
+    const groceryTypeObject = useSelector(findGroceryType(categoryObject, groceryType));
+
     const dispatch = useDispatch();
 
 
@@ -24,11 +26,11 @@ const GroceryCard = ({ cardImage, category }) => {
             name: values.newGroceryName,
             price: values.newGroceryPrice,
             // I should change the variable from the PRODUCE file, from name to groceryType.
-            groceryType: name,
+            groceryType: groceryType,
             category: category
         }
 
-        dispatch(addGrocery(newGrocery));
+        dispatch(addGroceryReducer(newGrocery));
         setNewGroceryModal(false);
 
     }
@@ -37,12 +39,23 @@ const GroceryCard = ({ cardImage, category }) => {
         const updatedGrocery = {
             name: values.updatedGroceryName,
             price: values.updatedGroceryPrice,
-            groceryType: name,
+            groceryType: groceryType,
             category: category
         }
 
-        // dispatch(updateGrocery(updatedGrocery));
-        // setUpdateGroceryModal(false);
+        dispatch(updateGroceryReducer(updatedGrocery));
+        setUpdateGroceryModal(false);
+    }
+
+    const deleteGrocery = (values) => {
+        const deletedGrocery = {
+            name: values.updatedGroceryName,
+            groceryType: groceryType,
+            category: category
+        }
+
+        dispatch(deleteGroceryReducer(deletedGrocery));
+        setDeleteGroceryModal(false);
     }
 
     return (
@@ -51,7 +64,7 @@ const GroceryCard = ({ cardImage, category }) => {
                 <CardImg src={image} alt='idk yet' />
                 <CardBody>
                     <CardTitle>
-                        <h3>{name}</h3>
+                        <h3>{groceryType}</h3>
                     </CardTitle>
                     <CardText>
                         <ul>
@@ -62,7 +75,7 @@ const GroceryCard = ({ cardImage, category }) => {
                                         <AddButton
                                             price={item.price}
                                             itemName={item.name}
-                                            groceryType={name}
+                                            groceryType={groceryType}
                                         />
                                     </div>
                                 </li>
@@ -71,12 +84,15 @@ const GroceryCard = ({ cardImage, category }) => {
 
                         <div style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Button onClick={() => setNewGroceryModal(true)}
-                                style={{ color: 'white', border: '1px solid white' }}
-                            >
+                                style={{ color: 'white', border: '1px solid white' }}>
                                 New </Button>
                             <Button onClick={() => setUpdateGroceryModal(true)}
-                                style={{ color: 'white', border: '1px solid white' }}>Update</Button>
-                            <Button>Delete</Button>
+                                style={{ color: 'white', border: '1px solid white' }}>
+                                Update</Button>
+                            
+                            <Button onClick={() => setDeleteGroceryModal(true)}
+                                style={{ color: 'white', border: '1px solid white' }}>
+                                Delete</Button>
                         </div>
                     </CardText>
                 </CardBody>
@@ -100,7 +116,10 @@ const GroceryCard = ({ cardImage, category }) => {
                                 <Label htmlFor='newGroceryName'>
                                     New Grocery Name
                                 </Label>
-                                <Field id='newGroceryName' name='newGroceryName' placeholder='Grocery' className='form-control' />
+                                <Field id='newGroceryName' 
+                                    name='newGroceryName' 
+                                    placeholder='Grocery' 
+                                    className='form-control' />
                                 {/* <ErrorMessage name='newGroceryName'>
                                             {(msg) => <p className='text-danger'>{msg}</p>}
                                         </ErrorMessage> */}
@@ -110,7 +129,11 @@ const GroceryCard = ({ cardImage, category }) => {
                                 <Label htmlFor='newGroceryPrice'>
                                     Price
                                 </Label>
-                                <Field id='newGroceryPrice' name='newGroceryPrice' placeholder='$$' className='form-control' />
+                                <Field 
+                                    id='newGroceryPrice' 
+                                    name='newGroceryPrice' 
+                                    placeholder='$$' 
+                                    className='form-control' />
                                 {/* <ErrorMessage name='newGroceryName'>
                                             {(msg) => <p className='text-danger'>{msg}</p>}
                                         </ErrorMessage> */}
@@ -143,12 +166,20 @@ const GroceryCard = ({ cardImage, category }) => {
                                     Select Current Grocery
                                 </Label>
 
-                                <Field name='updatedGroceryName'
+                                <Field 
+                                    name='updatedGroceryName'
                                     as='select'
                                     className='form-control'>
+                                    <option>Select...</option>
 
-                                    {groceryTypeObject.items.map((grocery) => {
-                                        return <option>{grocery.name}</option>
+                                    {/* Trying to make the first option default */}
+                                    {groceryTypeObject.items.map((grocery, idx) => {
+                                        if (idx === 0) {
+                                            return <option default key={idx}>{grocery.name}</option>
+                                        } else {
+                                            return <option key={idx}>{grocery.name}</option>
+                                        }
+                                        
                                     })}
 
                                 </Field>
@@ -161,7 +192,11 @@ const GroceryCard = ({ cardImage, category }) => {
                                 <Label htmlFor='updatedGroceryPrice'>
                                     Updated Price
                                 </Label>
-                                <Field id='updatedGroceryPrice' name='updatedGroceryPrice' placeholder='$$' className='form-control' />
+                                <Field 
+                                    id='updatedGroceryPrice' 
+                                    name='updatedGroceryPrice' 
+                                    placeholder='$$' 
+                                    className='form-control' />
                                 {/* <ErrorMessage name='newGroceryName'>
                                             {(msg) => <p className='text-danger'>{msg}</p>}
                                         </ErrorMessage> */}
@@ -174,8 +209,56 @@ const GroceryCard = ({ cardImage, category }) => {
                     </Formik>
                 </ModalBody>
             </Modal>
+
+            <Modal isOpen={deleteGroceryModal}>
+                <ModalHeader toggle={() => setDeleteGroceryModal(false)}>
+                    Update Existing Grocery
+                </ModalHeader>
+                <ModalBody>
+                    <Formik initialValues={
+                        {
+                            deletedGroceryName: ''
+                        }}
+                        onSubmit={deleteGrocery}
+                    // validate={}
+                    >
+                        <Form>
+                            <FormGroup>
+                                <Label htmlFor='deleteGroceryName'>
+                                    Select Grocery to Delete
+                                </Label>
+
+                                <Field 
+                                    name='deletedGroceryName'
+                                    as='select'
+                                    className='form-control'>
+                                    <option>Select...</option>
+
+                                    {/* Trying to make the first option default */}
+                                    {groceryTypeObject.items.map((grocery, idx) => {
+                                        if (idx === 0) {
+                                            return <option default key={idx}>{grocery.name}</option>
+                                        } else {
+                                            return <option key={idx}>{grocery.name}</option>
+                                        }
+                                        
+                                    })}
+
+                                </Field>
+                                {/* <ErrorMessage name='newGroceryName'>
+                                            {(msg) => <p className='text-danger'>{msg}</p>}
+                                        </ErrorMessage> */}
+                            </FormGroup>
+
+                            <Button type='submit' color='primary'>
+                                Delete
+                            </Button>
+                        </Form>
+                    </Formik>
+                </ModalBody>
+            </Modal>
         </>
     )
 }
 
-export default GroceryCard
+export default GroceryCard;

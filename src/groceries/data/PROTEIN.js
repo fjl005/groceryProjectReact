@@ -5,7 +5,7 @@ import tofuImg from '../img/tofu.jpg';
 export const PROTEIN = [
     {
         id: 0,
-        name: 'Lean Meat',
+        groceryType: 'Lean Meat',
         image: salmonImg,
         items: [
             {
@@ -24,7 +24,7 @@ export const PROTEIN = [
     },
     {
         id: 1,
-        name: 'Red Meat',
+        groceryType: 'Red Meat',
         image: steakImg,
         items: [
             {
@@ -43,7 +43,7 @@ export const PROTEIN = [
     },
     {
         id: 2,
-        name: 'Vegetarian Protein',
+        groceryType: 'Vegetarian Protein',
         image: tofuImg,
         items: [
             {

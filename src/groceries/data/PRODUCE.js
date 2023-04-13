@@ -5,7 +5,7 @@ import dairyImg from '../img/dairy.jpg';
 export const PRODUCE = [
     {
         id: 0,
-        name: 'Fruits',
+        groceryType: 'Fruits',
         image: fruitsImg,
         items: [
             {
@@ -24,7 +24,7 @@ export const PRODUCE = [
     },
     {
         id: 1,
-        name: 'Vegetables',
+        groceryType: 'Vegetables',
         image: vegetablesImg,
         items: [
             {
@@ -43,7 +43,7 @@ export const PRODUCE = [
     },
     {
         id: 2,
-        name: 'Dairy',
+        groceryType: 'Dairy',
         image: dairyImg,
         items: [
             {

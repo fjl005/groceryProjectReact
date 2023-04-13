@@ -20,7 +20,7 @@ const groceriesSlice = createSlice({
             state.budget = action.payload;
         },
 
-        addGrocery: (state, action) => {
+        addGroceryReducer: (state, action) => {
             const {name, price, groceryType, category} = action.payload;
             const lowerCaseCategory = category.toLowerCase();
             const newGrocery = {
@@ -29,7 +29,7 @@ const groceriesSlice = createSlice({
             }
 
             state[lowerCaseCategory].map((item) => {
-                if (item.name === groceryType) {
+                if (item.groceryType === groceryType) {
                     item.items.push(newGrocery);
                 }
 
@@ -39,28 +39,40 @@ const groceriesSlice = createSlice({
         },
 
         // Need to work on this next
-        updateGrocery: (state, action) => {
-            // const {name, price, groceryType, category} = action.payload;
-            // const lowerCaseCategory = category.toLowerCase();
+        updateGroceryReducer: (state, action) => {
+            const {name, price, groceryType, category} = action.payload;
+            const lowerCaseCategory = category.toLowerCase();
 
-            // console.log('i assume this works');
-            // const groceryTypeObject = state[lowerCaseCategory].find((type) => (type.name === groceryType));
-            // console.log('groceryTypeObject: ', groceryTypeObject);
-            // groceryTypeObject.items.map((item) => {
+            const groceryTypeObject = state[lowerCaseCategory].find((type) => (type.groceryType === groceryType));
+            groceryTypeObject.items.map((item) => {
+                if (item.name === name) {
+                    item.price = price;
+                }
+            });
+            return state;
+        },
+
+        deleteGroceryReducer: (state,action) => {
+            const {name, groceryType, category} = action.payload;
+            const lowerCaseCategory = category.toLowerCase();
+
+            const groceryTypeObject = state[lowerCaseCategory].find((type) => (type.groceryType === groceryType));
+            const indexRemoval = groceryTypeObject.items.find((item) => item.name === name);
+            groceryTypeObject.items.splice(indexRemoval, 1);
+            console.log('completed');
+            // groceryTypeObject.items.map((item, idx) => {
             //     if (item.name === name) {
-            //         console.log('this works');
-            //         item.price = price;
+            //         groceryTypeObject.items.splice(idx, 1);
             //     }
             // });
-
-            return state;
+            // return state;
         }
     }
 });
 
 export const groceriesReducer = groceriesSlice.reducer;
 
-export const {updateBudget, setBudget, addGrocery, updateGrocery} = groceriesSlice.actions;
+export const {updateBudget, setBudget, addGroceryReducer, updateGroceryReducer, deleteGroceryReducer} = groceriesSlice.actions;
 
 export const currentBudget = (state) => {
     return state.groceries.budget;
@@ -75,8 +87,9 @@ export const findCategory = (category) => (state) => {
 
 export const findGroceryType = (category, groceryType) => (state) => {
     let returnGroceryType;
+
     category.map((findType) => {
-        if (findType.name === groceryType) {
+        if (findType.groceryType === groceryType) {
             returnGroceryType = findType;
         }
     })

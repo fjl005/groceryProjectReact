@@ -2,13 +2,14 @@ import { FormGroup, Col, Label } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { validateBudgetInput } from '../utils/validateBudgetInput';
 import { currentBudget } from '../groceries/groceriesSlice';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setBudget } from '../groceries/groceriesSlice';
+import { useState } from 'react';
 
 const BudgetInput = () => {
     const currentBudgetVal = useSelector(currentBudget);
     const dispatch = useDispatch();
+
 
     const handleChange = (e) => {
         dispatch(setBudget(e.target.value));
@@ -47,4 +48,4 @@ const BudgetInput = () => {
     )
 }
 
-export default BudgetInput
+export default BudgetInput;

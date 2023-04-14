@@ -15,6 +15,8 @@ const summarySlice = createSlice({
             const { price, itemName, groceryType } = action.payload;
             let exist = false;
 
+            
+
             switch (groceryType) {
                 case ('Fruits'): {
                     

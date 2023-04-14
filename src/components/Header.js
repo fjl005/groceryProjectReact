@@ -17,7 +17,32 @@ const Header = () => {
 
   return (
     <>
-      navbar
+      <Navbar expand='md'>
+
+            <NavbarToggler onClick={() => setMenuOpen(!menuOpen)}/>
+            <Collapse isOpen={menuOpen} navbar>
+                <Nav className='ms-auto' navbar>
+                    <NavItem>
+                        <NavLink className='nav-link' to='/'>
+                          Budget 
+                        </NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className='nav-link' to='/produce'>
+                          Produce
+                        </NavLink>
+
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className='nav-link' to='/protein'>
+                          Protein
+                        </NavLink>
+
+                    </NavItem>
+                </Nav>
+
+            </Collapse>
+        </Navbar>
     </>
     
   );

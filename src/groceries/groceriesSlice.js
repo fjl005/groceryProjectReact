@@ -1,6 +1,8 @@
 import { PRODUCE } from "./data/PRODUCE";
 import { PROTEIN } from './data/PROTEIN';
 import {createSlice} from '@reduxjs/toolkit';
+import { validateBudgetInput } from "../utils/validateBudgetInput";
+import { validateBudgetInRedux } from "../utils/validateBudgetInRedux";
 
 const initialState = {
     budget: 0,
@@ -17,7 +19,22 @@ const groceriesSlice = createSlice({
         },
 
         setBudget: (state, action) => {
-            state.budget = action.payload;
+            const budgetInput = action.payload;
+            console.log('budget input is: ', budgetInput);
+            let budgetOnScreen = '';
+            const budgetEntry = {
+                budgetInput: budgetInput
+            }
+
+            console.log('the budget input is: ', budgetEntry);
+            if (validateBudgetInRedux(budgetInput)) {
+                console.log('there should be an error');
+                state.budget = null;
+
+            } else {
+                console.log('no error');
+                state.budget = budgetInput;
+            }
         },
 
         addGroceryReducer: (state, action) => {
@@ -60,12 +77,6 @@ const groceriesSlice = createSlice({
             const indexRemoval = groceryTypeObject.items.find((item) => item.name === name);
             groceryTypeObject.items.splice(indexRemoval, 1);
             console.log('completed');
-            // groceryTypeObject.items.map((item, idx) => {
-            //     if (item.name === name) {
-            //         groceryTypeObject.items.splice(idx, 1);
-            //     }
-            // });
-            // return state;
         }
     }
 });

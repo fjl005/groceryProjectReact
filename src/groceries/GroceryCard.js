@@ -114,7 +114,7 @@ const GroceryCard = ({ cardImage, category }) => {
                         <Form>
                             <FormGroup>
                                 <Label htmlFor='newGroceryName'>
-                                    New Grocery Name
+                                    Enter New Grocery Name
                                 </Label>
                                 <Field id='newGroceryName' 
                                     name='newGroceryName' 
@@ -149,7 +149,7 @@ const GroceryCard = ({ cardImage, category }) => {
 
             <Modal isOpen={updateGroceryModal}>
                 <ModalHeader toggle={() => setUpdateGroceryModal(false)}>
-                    Update Existing Grocery
+                    Update Existing Grocery Price
                 </ModalHeader>
                 <ModalBody>
                     <Formik initialValues={
@@ -163,7 +163,7 @@ const GroceryCard = ({ cardImage, category }) => {
                         <Form>
                             <FormGroup>
                                 <Label htmlFor='updatedGroceryName'>
-                                    Select Current Grocery
+                                    Select Grocery to Update
                                 </Label>
 
                                 <Field 
@@ -212,7 +212,7 @@ const GroceryCard = ({ cardImage, category }) => {
 
             <Modal isOpen={deleteGroceryModal}>
                 <ModalHeader toggle={() => setDeleteGroceryModal(false)}>
-                    Update Existing Grocery
+                    Delete Grocery
                 </ModalHeader>
                 <ModalBody>
                     <Formik initialValues={

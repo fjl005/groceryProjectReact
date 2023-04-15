@@ -6,3 +6,28 @@
   text-align: left;
   list-style-position: inside;
 }
+
+.header {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  z-index: 999;
+  box-shadow: 0 1px 5px rgba(0,0,0,.25);
+}
+
+.navbar {
+  position: fixed;
+  top: 0; /* set the top value to the height of the header */
+  left: 0;
+  right: 0;
+  height: 40px;
+  color: #fff;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding-top: 135px;
+}

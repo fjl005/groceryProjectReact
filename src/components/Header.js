@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <>
-      <Navbar expand='md'>
+      <Navbar expand='md' className='navbar'>
 
             <NavbarToggler onClick={() => setMenuOpen(!menuOpen)}/>
             <Collapse isOpen={menuOpen} navbar>
@@ -36,6 +36,12 @@ const Header = () => {
                     <NavItem>
                         <NavLink className='nav-link' to='/protein'>
                           Protein
+                        </NavLink>
+
+                    </NavItem>
+                    <NavItem>
+                        <NavLink className='nav-link' to='/Summary'>
+                          Summary
                         </NavLink>
 
                     </NavItem>

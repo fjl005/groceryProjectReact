@@ -5,7 +5,7 @@ import { validateBudgetInput } from "../utils/validateBudgetInput";
 import { validateBudgetInRedux } from "../utils/validateBudgetInRedux";
 
 const initialState = {
-    budget: 0,
+    budget: null,
     produce: PRODUCE,
     protein: PROTEIN
 };
@@ -20,19 +20,11 @@ const groceriesSlice = createSlice({
 
         setBudget: (state, action) => {
             const budgetInput = action.payload;
-            console.log('budget input is: ', budgetInput);
-            let budgetOnScreen = '';
-            const budgetEntry = {
-                budgetInput: budgetInput
-            }
 
-            console.log('the budget input is: ', budgetEntry);
             if (validateBudgetInRedux(budgetInput)) {
-                console.log('there should be an error');
                 state.budget = null;
 
             } else {
-                console.log('no error');
                 state.budget = budgetInput;
             }
         },
@@ -51,6 +43,7 @@ const groceriesSlice = createSlice({
                 }
 
             });
+            
             return state;
             
         },
@@ -105,8 +98,5 @@ export const findGroceryType = (category, groceryType) => (state) => {
         }
     })
 
-    return returnGroceryType
+    return returnGroceryType;
 }
-
-//     return state.groceries.protein;
-// };

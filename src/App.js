@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import Header from './components/Header';
@@ -7,10 +7,11 @@ import BudgetInput from './components/BudgetInput';
 import Summary from './summary/Summary';
 
 function App() {
+
   return (
     <div className="App">
       <Header/>
-      <BudgetInput />
+      <BudgetInput  />
       <GroceryCardsList />
       <Summary />
     </div>

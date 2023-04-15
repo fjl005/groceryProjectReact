@@ -1,4 +1,4 @@
-import { FormGroup, Col, Label } from 'reactstrap';
+import { Container, Row, Col, FormGroup, Label } from 'reactstrap';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { validateBudgetInput } from '../utils/validateBudgetInput';
 import { currentBudget } from '../groceries/groceriesSlice';
@@ -17,34 +17,50 @@ const BudgetInput = () => {
     }
 
     return (
-        <Formik
-        initialValues={{
-            budgetInput: currentBudgetVal
-        }}
-        validate={validateBudgetInput}>
-            <Form>
-                <FormGroup row>
-                    <Col>
-                        {/* <Label name='budgetInput'>
+        <div className='header'>
+
+        
+        <Container className='container-fluid'>
+            <Row>
+                <Col className='header'>
+                    <Label htmlFor='budgetInput'>Enter Budget (Minimum $1)</Label>
+
+                    <Formik
+                        initialValues={{
+                            budgetInput: currentBudgetVal
+                        }}
+                        validate={validateBudgetInput}>
+                        <Form>
+                            <FormGroup row>
+                                <Col>
+                                    {/* <Label name='budgetInput'>
                             Enter Budget: 
                         </Label> */}
-                        <Field
-                            name='budgetInput'
-                            placeholder='Enter Budget (min. $1)'
-                            onKeyUp={handleChange}
-                            >
-                        </Field>
-                        <ErrorMessage name='budgetInput'>
-                            {(msg) => <p className='text-danger'>{msg}</p>}
-                        </ErrorMessage>
-                        <h1>Budget: ${currentBudgetVal}</h1>
 
-                    </Col>
+                                    <Field
+                                        name='budgetInput'
+                                        placeholder='Enter Budget (min. $1)'
+                                        onKeyUp={handleChange}
+                                        id='budgetInput'
+                                    >
+                                    </Field>
+                                    <ErrorMessage name='budgetInput'>
+                                        {(msg) => <p className='text-danger'>{msg}</p>}
+                                    </ErrorMessage>
+                                    <h1>Budget: ${currentBudgetVal}</h1>
 
-                </FormGroup>
+                                </Col>
 
-            </Form>
-        </Formik>
+                            </FormGroup>
+
+                        </Form>
+                    </Formik>
+                </Col>
+            </Row>
+
+        </Container>
+        </div>
+
     )
 }
 

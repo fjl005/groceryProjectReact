@@ -1,4 +1,4 @@
-import { currentList, currentFruitList, currentVegetableList, currentDairyList } from "./summarySlice";
+import { currentList, currentFruitList, currentVegetableList, currentDairyList, findCurrentSpecificList } from "./summarySlice";
 import { useSelector } from "react-redux";
 import AddedGrocery from "./AddedGrocery";
 import { Container, Row, Col } from "reactstrap";
@@ -6,46 +6,77 @@ import { Container, Row, Col } from "reactstrap";
 
 
 function Summary() {
-    const currentListVal = useSelector(currentList);
-    const currentFruitListVal = useSelector(currentFruitList);
-    const currentVegetableListVal = useSelector(currentVegetableList);
-    const currentDairyListVal = useSelector(currentDairyList);
+    const currentFruitList = useSelector(findCurrentSpecificList('Fruits'));
+    const currentVegetableList = useSelector(findCurrentSpecificList('Vegetables'));
+    const currentDairyList = useSelector(findCurrentSpecificList('Dairy'));
+
+    const currentLeanMeatList = useSelector(findCurrentSpecificList('Lean Meat'));
+    const currentRedMeatList = useSelector(findCurrentSpecificList('Red Meat'));
+    const currentVegetarianProteinList = useSelector(findCurrentSpecificList('Vegetarian Protein'));
 
     return (
         <>
             <Container>
                 <Row>
                     <Col>
-                        <h2>Summary</h2>
+                        <h1 style={{textAlign: "left"}}>Summary</h1>
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <h4>Produce</h4>
+                        <h3 style={{textAlign: "left"}}>Produce</h3>
                         <ul className="ul-summary">
-                            <li>Fruits</li>
+                            <h5>Fruits</h5>
                             <ul>
-                                {currentFruitListVal.map((item) => (
-                                    <AddedGrocery item={item} />
-                                ))}
+                                {currentFruitList ?
+                                    currentFruitList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
+
                             </ul>
-                            <li>Vegetables</li>
+                            <h5>Vegetables</h5>
                             <ul>
-                                {currentVegetableListVal.map((item) => (
-                                    <AddedGrocery item={item} />
-                                ))}
+                                {currentVegetableList ?
+                                    currentVegetableList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
                             </ul>
-                            <li>Dairy</li>
+                            <h5>Dairy</h5>
                             <ul>
-                                {currentDairyListVal.map((item) => (
-                                    <AddedGrocery item={item} />
-                                ))}
+                                {currentDairyList ?
+                                    currentDairyList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
                             </ul>
                         </ul>
                     </Col>
 
                     <Col>
-                        <h4>Protein</h4>
+                        <h3 style={{textAlign: "left"}}>Protein</h3>
+                        <ul className="ul-summary">
+                            <h5>Lean Meat</h5>
+                            <ul>
+                                {currentLeanMeatList ?
+                                    currentLeanMeatList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
+
+                            </ul>
+                            <h5>Red Meat</h5>
+                            <ul>
+                                {currentRedMeatList ?
+                                    currentRedMeatList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
+                            </ul>
+                            <h5>Vegetarian Protein</h5>
+                            <ul>
+                                {currentVegetarianProteinList ?
+                                    currentVegetarianProteinList.map((item, idx) => {
+                                        return <AddedGrocery item={item} key={idx} />
+                                    }) : null}
+                            </ul>
+                        </ul>
                     </Col>
                 </Row>
 

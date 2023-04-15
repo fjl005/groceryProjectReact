@@ -1,116 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    items: [],
-    fruitItems: [],
-    vegetableItems: [],
-    dairyItems: []
+    fruits: [],
+    vegetables: [],
+    dairy: [],
+    leanmeat: [],
+    redmeat: [],
+    vegetarianprotein: []
 };
 
 const summarySlice = createSlice({
     name: 'summary',
     initialState,
     reducers: {
-        addItem: (state, action) => {
+        addItemToSummary: (state, action) => {
             const { price, itemName, groceryType } = action.payload;
+            const removeSpacesGrocery = groceryType.replaceAll(' ', '');
+            const lowerCaseGroceryType = removeSpacesGrocery.toLowerCase();
+            console.log('lower case grocery type: ', lowerCaseGroceryType);
             let exist = false;
 
-            
-
-            switch (groceryType) {
-                case ('Fruits'): {
-                    
-                    state.fruitItems.forEach((grocery) => {
-                        if (grocery.groceryName === itemName) {
-                            grocery.quantity++;
-                            exist = true;
-                            return;
-                        }
-                    });
-
-                    if (!exist) {
-                        state.fruitItems.push({
-                            groceryName: itemName,
-                            price: price,
-                            quantity: 1
-                        });
-                    }
-                    return state;
+            state[lowerCaseGroceryType].forEach((grocery) => {
+                if (grocery.groceryName === itemName) {
+                    grocery.quantity++;
+                    exist = true;
                 }
+            });
 
-                case ('Vegetables'): {
-                    state.vegetableItems.forEach((grocery) => {
-                        if (grocery.groceryName === itemName) {
-                            grocery.quantity++;
-                            exist = true;
-                            return;
-                        }
-                    });
-
-                    if (!exist) {
-                        state.vegetableItems.push({
-                            groceryName: itemName,
-                            price: price,
-                            quantity: 1
-                        });
-                    }
-                    return state;
-                }
-
-                case ('Dairy'): {
-                    state.dairyItems.push({
-                        groceryName: itemName,
-                        price: price,
-                        quantity: 1
-                    });
-                    return state;
-                }
-                default:
-                    return state;
+            if (!exist) {
+                console.log('doesnt exist, hooray');
+                state[lowerCaseGroceryType].push({
+                    groceryName: itemName,
+                    price: price,
+                    quantity: 1
+                });
             }
 
+            return state;
         }
     }
 });
 
 export const summaryReducer = summarySlice.reducer;
 
-export const currentList = (state) => {
-    return state.summary.items;
+export const findCurrentSpecificList = ( groceryType) => (state) => {
+
+    const removeSpacesGrocery = groceryType.replaceAll(' ', '');
+    const lowerCaseGroceryType = removeSpacesGrocery.toLowerCase();
+    return state.summary[lowerCaseGroceryType];
+
 }
 
-export const currentFruitList = (state) => {
-    return state.summary.fruitItems;
-}
-
-export const currentVegetableList = (state) => {
-    return state.summary.vegetableItems;
-}
-
-export const currentDairyList = (state) => {
-    return state.summary.dairyItems;
-}
-
-// export const findQuantity = (grocery) => (state) => {
-//     return state.summary.items.grocery.quantity;
-// }
-
-// export const findPrice = (grocery) => (state) => {
-//     return state.summary.items.actiongrocery.price;
-// }
-
-// export const findGroceryName = (grocery) => (state) => {
-//     const groceryArray = state.summary.items;
-//     console.log('grocery Array', groceryArray);
-
-//     // const groceryName = grocery.groceryName;
-//     // console.log(groceryName);
-
-//     // const blueberries = 'blueberries';
-//     // const groceryName = groceryArray.find((item) => item === blueberries).groceryName;
-//     // console.log('grocery name', groceryName);
-
-//     // return state.summary.items.grocery.name;
-// }
-
-export const { addItem } = summarySlice.actions;
+export const { addItemToSummary } = summarySlice.actions;

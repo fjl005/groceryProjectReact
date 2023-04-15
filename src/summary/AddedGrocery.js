@@ -9,8 +9,8 @@ const AddedGrocery = ({item}) => {
         <ul>
             <li>Quantity: {item.quantity}</li>
         </ul>
+
     </li>
-    
   )
 }
 
